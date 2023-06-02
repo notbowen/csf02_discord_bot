@@ -37,7 +37,7 @@ pub fn run(_options: &[CommandDataOption]) -> String {
 
     // Get IP address of server
     thread::sleep(Duration::from_secs(1));
-    let server_ip = match get_server_ip("~/csf02_minecraft/server.log") {
+    let server_ip = match get_server_ip("/home/bowen/csf02_minecraft/server.log") {
         Ok(ip) => ip,
         Err(why) => {
             error!("Unable to get server IP: {}", why);
