@@ -46,7 +46,7 @@ pub fn run(_options: &[CommandDataOption]) -> String {
     };
 
     // Inform user of server IP
-    format!(":white_check_mark: Successfully started server!\nServer Ip: `{}`", server_ip)
+    format!(":white_check_mark: Successfully started server!\nServer IP: `{}`", server_ip)
 }
 
 pub fn register(command: &mut CreateApplicationCommand) -> &mut CreateApplicationCommand {
