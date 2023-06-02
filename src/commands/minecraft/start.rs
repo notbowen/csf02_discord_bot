@@ -5,21 +5,22 @@ use serenity::model::prelude::interaction::application_command::CommandDataOptio
 use std::io::{BufRead, BufReader};
 use std::fs::File;
 
-use std::process::Command;
+use std::process::{Command, Stdio};
 use std::thread;
 use std::time::Duration;
 
 pub fn run(_options: &[CommandDataOption]) -> String {
     // Check if Minecraft server is already running
-    let output = match Command::new("grep").arg("-q").arg("minecraft").output() {
-        Ok(o) => o,
-        Err(why) => {
-            error!("Unable to execute pgrep: {}", why);
-            return ":x: Error while checking for existing server".to_string();
-        }
-    };
+    let output = Command::new("screen")
+        .arg("-ls")
+        .stdout(Stdio::piped())
+        .spawn()
+        .unwrap()
+        .wait_with_output()
+        .unwrap();
 
-    if !output.stdout.is_empty() {
+    let output = String::from_utf8_lossy(&output.stdout);
+    if output.contains("minecraft") {
         return ":x: Minecraft server is already running!".to_string();
     }
 
